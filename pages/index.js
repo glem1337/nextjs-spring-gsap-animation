@@ -1,6 +1,31 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
+import {useTrail, animated} from "react-spring";
+import React from "react";
+
+const Trail = ({ children }) => {
+  const items = React.Children.toArray(children)
+  const trail = useTrail(items.length, {
+    config: { mass: 5, tension: 2000, friction: 200 },
+    opacity: 1,
+    x: 0,
+    height: 110,
+    from: { opacity: 0, x: 20, height: 0 },
+    delay: 300
+  })
+
+  return (
+      <>
+        {trail.map(({ height, ...style }, index) => (
+            <animated.span key={index} style={style}>
+              <animated.span style={{ height }}>{items[index]}</animated.span>
+            </animated.span>
+        ))}
+      </>
+  )
+}
 
 export default function Home() {
   return (
@@ -12,43 +37,55 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+          <h1 className={styles.title}>
+            <Trail>
+              <span>Welcome </span>
+              <span>to </span>
+              <a href="https://nextjs.org">Next.js!</a>
+            </Trail>
+          </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+          <p className={styles.description}>
+            Get started by editing{' '}
+            <code className={styles.code}>pages/index.js</code>
+          </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <Link href="/react-spring/use-spring">
+            <a className={styles.card}>
+              <h2>React Spring &rarr;</h2>
+              <p>useSpring()</p>
+            </a>
+          </Link>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <Link href="/react-spring/parallax">
+            <a className={styles.card}>
+              <h2>React Spring &rarr;</h2>
+              <p>Parallax</p>
+            </a>
+          </Link>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+          <Link href="/gsap/reveal">
+            <a className={styles.card}>
+              <h2>Gsap &rarr;</h2>
+              <p>Reveal effect</p>
+            </a>
+          </Link>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+
+          <Link href="/gsap/scroll-trigger">
+            <a className={styles.card}>
+              <h2>Gsap &rarr;</h2>
+              <p>ScrollTrigger example</p>
+            </a>
+          </Link>
+
+          <Link href="/gsap/scroll-slider">
+            <a className={styles.card}>
+              <h2>Gsap &rarr;</h2>
+              <p>ScrollSlider example</p>
+            </a>
+          </Link>
         </div>
       </main>
 
